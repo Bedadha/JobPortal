@@ -26,14 +26,14 @@
 
 
 <div class="row">
-    {% for job in query %}
+    {% for list in list %}
     <div class="col-md-6">
       <div class="card card-signin my-2">
         
-        <a href="{% url 'jobdetail' job.id  %}">
+        <a href="{% url 'jobdetail' list.id  %}">
 
-             <h1>{{ job.job_title }}</h1>
-             <h2>{{ job.job_type }}</h2>
+             <h1>{{ list.job_title }}</h1>
+             <h2>{{ list.job_type }}</h2>
     
       </a>
       

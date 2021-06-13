@@ -2,10 +2,10 @@ from django.db import models
 # Create your models here.
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.db.models.deletion import CASCADE
+#from django.db.models.deletion import CASCADE
 
 class Job(models.Model):
-    recruiter=models.ForeignKey(User,on_delete=models.CASCADE)
+    recruiter=models.ForeignKey(User,related_name='jobs',on_delete=models.CASCADE)
     job_title=models.CharField(max_length=200)
     company_name=models.CharField(max_length=200)
     job_description=models.CharField(max_length=500)
@@ -13,8 +13,6 @@ class Job(models.Model):
     job_type=models.CharField(max_length=200)
     end_date=models.DateField(default=timezone.now)
     posted_on=models.DateField(default=timezone.now)
-    
-    
     
     def __str__(self):
         return self.job_title
@@ -26,7 +24,7 @@ class Applicants(models.Model):
         User, related_name='applied', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.applicant
+        return self.applicant.username
 
 
 class SelectedApplicants(models.Model):
