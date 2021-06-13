@@ -1,0 +1,25 @@
+{% include 'applicant/navigatio.html' %}
+
+<div class="row">
+    
+    <div class="col-md-12">
+      <div class="card card-signin my-2">
+        
+         
+             <h1>{{ job.job_title }}</h1>
+             <h2>{{ job.job_type }}</h2>
+             {% if not applied %} 
+             <a
+               class="btn btn-warning btn-lg"
+               href="{% url 'apply' job.id %}"
+               ><b>Apply Now</b></a>
+             
+             {% else %}
+             <a class="btn btn-success btn-lg" href="#"
+               ><b>Applied!</b></a>
+               {% endif %}
+       
+        
+      </div>
+    </div>
+  </div>
