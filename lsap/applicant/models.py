@@ -10,11 +10,11 @@ class ApplicantProfile(models.Model):
     name=models.CharField(max_length=200,null=True)
     email=models.CharField(max_length=200,null=True)
     gender=models.CharField(max_length=10,null=True)
-    birth_date=models.DateTimeField()
+    birth_date=models.DateField()
     resume=models.FileField(upload_to='resume')
     
     def save(self, *args, **kwargs):
-        super(self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         
     def __str__(self):
         return self.user.username

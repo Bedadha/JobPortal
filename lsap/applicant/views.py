@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 import json
+from .forms import ProfileForm
 from django.http import JsonResponse,HttpResponse
 User=get_user_model()
 
@@ -68,8 +69,32 @@ def search(request):
             company_name__icontains=search_str)
         data=job.values()
         return JsonResponse(list(data),safe=False)
+    
 def logout(request):
     return redirect('login')
+
+def my_profile(request):
+    profile=ApplicantProfile.objects.filter(user=request.user).first()
+    context={
+        'user':request.user,
+        'profile':profile
+    }
+    return render(request,'applicant/profile.html',context)
+
+def edit_profile(request):
+    user=request.user
+    profile=ApplicantProfile.objects.filter(user=request.user).first()
+    if request.method == 'POST':
+        form=ProfileForm(request.POST,request.FILES,instance=profile)
+        if form.is_valid():
+            data=form.save(commit=False)
+            data.user=user
+            data.save()
+            return redirect('profile')
+    else:
+        form=ProfileForm(instance=profile)
+    return render(request,'applicant/editprofile.html',{'form':form})
+    
     
     
     
