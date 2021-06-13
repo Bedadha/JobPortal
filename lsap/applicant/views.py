@@ -10,13 +10,18 @@ from recruiter.models import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
-
+import json
+from django.http import JsonResponse,HttpResponse
 User=get_user_model()
 
 def HomeView(request):
     jobs=Job.objects.all()
+    paginator=Paginator(jobs,5)
+    page_number  = request.GET.get('page')
+    page_obj = Paginator.get_page(paginator, page_number)
     context={
-        'query':jobs
+        'page_obj':page_obj,
+        'jobs':jobs
     }
     return render(request,'applicant/home.html',context)
 
@@ -55,16 +60,16 @@ def apply(request,id):
     return render(request,'applicant/jobdetail.html',{'job':job,'applied':applied})
 
 def search(request):
-    query=request.GET.get('search')
-    list=[]
-    job_type=Job.objects.filter(job_type__icontains=query)
-    company_name=Job.objects.filter(company_name__icontains=query)
-    for i in job_type:
-        list.append(i)
-    for i in company_name:
-        list.append(i)
-    return render(request,'applicant/search.html',{'list':list})
-    
+    if request.method == 'POST':
+
+        search_str=json.loads(request.body).get('searchText')
+        job=Job.objects.filter(
+            job_type__icontains=search_str) | Job.objects.filter(
+            company_name__icontains=search_str)
+        data=job.values()
+        return JsonResponse(list(data),safe=False)
+def logout(request):
+    return redirect('login')
     
     
     

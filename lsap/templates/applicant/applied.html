@@ -1,18 +1,24 @@
 {% include 'applicant/navigatio.html' %}
 
-<div class="row">
-    {% for job in jobs %}
-    <div class="col-md-6">
-      <div class="card card-signin my-2">
-        
-        <a href="{% url 'jobdetail' job.job.id  %}">
+<div class="app-table">
+  <table class = "table table-stripped table-hover">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Profile</th>
+      </tr>
+    </thead>
 
-             <h1>{{ job.job.job_title }}</h1>
-             <h2>{{ job.job.job_type }}</h2>
-    
-      </a>
-      
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+    <tbody>
+      {% for job in jobs %}
+      <tr>
+          <td>{{job.job.company_name}}</td>
+          <td>{{job.job.job_type}}</td>
+        <td><a href="{% url 'jobdetail' job.job.id  %}" class = "btn btn-secondary btn-sm">View</a></td>
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>

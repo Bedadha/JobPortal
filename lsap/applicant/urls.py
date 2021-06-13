@@ -2,6 +2,7 @@ from django import views
 from django.contrib import admin
 from django.urls import path,include
 from . import views
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
   
@@ -9,8 +10,8 @@ urlpatterns = [
     path('applied',views.applied_jobs,name='applied'),
     path('jobdetail/<int:id>',views.details_of_job,name='jobdetail'),
     path('apply/<int:id>',views.apply,name='apply'),
-    path('search',views.search,name='search')
-
+    path('search', csrf_exempt(views.search), name = "search"),
+    path('logout',views.logout,name='logout'),
 
     
 ]
