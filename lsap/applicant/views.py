@@ -26,15 +26,23 @@ def HomeView(request):
     }
     return render(request,'applicant/home.html',context)
 
-@login_required
 def applied_jobs(request):
     user=request.user
-    job=AppliedJobs.objects.filter(user=user)
-    context={
-        'jobs':job
-    }
-    print(job)
-    return render(request,'applicant/applied.html',context)
+    status=[]
+  
+    jobs=AppliedJobs.objects.filter(user=user)
+    for job in jobs:
+        if Applicants.objects.filter(job=job.job).filter(applicant=user).exists():
+            status.append('pending')
+        elif SelectedApplicants.objects.filter(job=job.job).filter(applicant=user).exists():
+            status.append('selected')
+        else:
+            status.append('rejected')
+            
+    zipd=zip(jobs,status)
+
+    print(status)
+    return render(request,'applicant/applied.html',{'zipd':zipd})
 
 def details_of_job(request,id):
     job=Job.objects.get(pk=id)
