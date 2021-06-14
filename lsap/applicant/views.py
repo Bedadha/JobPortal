@@ -79,7 +79,7 @@ def search(request):
         return JsonResponse(list(data),safe=False)
     
 def logout(request):
-    return redirect('login')
+    return redirect('/')
 
 def my_profile(request):
     profile=ApplicantProfile.objects.filter(user=request.user).first()
