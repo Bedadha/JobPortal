@@ -22,9 +22,10 @@ class Applicants(models.Model):
         Job, related_name='applicants', on_delete=models.CASCADE)
     applicant = models.ForeignKey(
         User, related_name='applied', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.applicant.username
+    
+        
+    def __int__(self):
+        return self.applicant
 
 
 class SelectedApplicants(models.Model):
@@ -33,5 +34,5 @@ class SelectedApplicants(models.Model):
     applicant = models.ForeignKey(
         User, related_name='select_applicant', on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __int__(self):
         return self.applicant

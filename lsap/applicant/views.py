@@ -11,11 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 import json
-from django.contrib import auth
 from .forms import ProfileForm
 from django.http import JsonResponse,HttpResponse
 User=get_user_model()
-
+@login_required
 def HomeView(request):
     jobs=Job.objects.all()
     paginator=Paginator(jobs,5)
@@ -26,7 +25,7 @@ def HomeView(request):
         'jobs':jobs
     }
     return render(request,'applicant/home.html',context)
-
+@login_required
 def applied_jobs(request):
     user=request.user
     status=[]
@@ -44,7 +43,7 @@ def applied_jobs(request):
 
     print(status)
     return render(request,'applicant/applied.html',{'zipd':zipd})
-
+@login_required
 def details_of_job(request,id):
     job=Job.objects.get(pk=id)
     applied=False
@@ -57,7 +56,7 @@ def details_of_job(request,id):
     }   
     return render(request,'applicant/jobdetail.html',context)
 
-
+@login_required
 def apply(request,id):
     user=request.user
     job=Job.objects.get(pk=id)
@@ -68,7 +67,7 @@ def apply(request,id):
     add_to_applied.save()
     
     return render(request,'applicant/jobdetail.html',{'job':job,'applied':applied})
-
+@login_required
 def search(request):
     if request.method == 'POST':
 
@@ -79,8 +78,9 @@ def search(request):
         data=job.values()
         return JsonResponse(list(data),safe=False)
     
-
-
+def logout(request):
+    return redirect('/')
+@login_required
 def my_profile(request):
     profile=ApplicantProfile.objects.filter(user=request.user).first()
     context={
@@ -88,7 +88,7 @@ def my_profile(request):
         'profile':profile
     }
     return render(request,'applicant/profile.html',context)
-
+@login_required
 def edit_profile(request):
     user=request.user
     profile=ApplicantProfile.objects.filter(user=request.user).first()
