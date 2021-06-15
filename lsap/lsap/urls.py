@@ -23,6 +23,7 @@ urlpatterns = [
     path('',index),
     path('authentication/', include('authentication.urls')),
     path('applicant/', include('applicant.urls')),
+    path('recruiter/',include('recruiter.urls')),
     path('contact/', contact),
     
 

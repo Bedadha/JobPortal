@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 import json
+from django.contrib import auth
 from .forms import ProfileForm
 from django.http import JsonResponse,HttpResponse
 User=get_user_model()
@@ -78,8 +79,7 @@ def search(request):
         data=job.values()
         return JsonResponse(list(data),safe=False)
     
-def logout(request):
-    return redirect('/')
+
 
 def my_profile(request):
     profile=ApplicantProfile.objects.filter(user=request.user).first()
