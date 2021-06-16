@@ -1,4 +1,5 @@
 {% include 'messages.html' %}
+{% load static %}
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -93,6 +94,9 @@ a {
                 class="form-control form-control-sm"
               />
             </div>
+            <div class="invalid_feedback invalid-feedback" style="display:none">
+            </div>
+            <p class="text-sm text-success usernameSuccessOutput"></p>
             <div class="form-group">
               <input
                 type="email"
@@ -104,6 +108,8 @@ a {
                 value="{{fieldValues.email}}"
               />
             </div>
+            <div class="emailFeedBackArea invalid-feedback" style="display:none">
+            </div>
             <div class="form-group">
                 <input
                   type="password"
@@ -112,6 +118,7 @@ a {
                   class="form-control form-control-sm"
                   id="passwordField"
                 />
+                <small class="float-right py-3 showPasswordToggle">SHOW</small>
             </div>
             <div class="form-group">
                 <input
@@ -125,6 +132,10 @@ a {
         </hr>
             <input type="submit" value="Register" class="btn" />
           </form>
+          <div class="container">
+            <span class="text-lead lead">Have an account?</span><a href="{% url 'login' %}">Login</a><br>
+            <span class="text-lead lead">Forgot Password</span><a href="{% url 'request-password' %}">Reset</a>
+          </div>
         </div>
 
 
@@ -134,5 +145,5 @@ a {
     </div>
     <div class="col-md-4"></div>
     </div>
-    
+    <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}

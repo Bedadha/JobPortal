@@ -1,5 +1,5 @@
 {% include 'messages.html' %}
-
+{% load static %}
 {% block content %}
 <div class="row">
     <div class="col-md-1"></div>
@@ -63,6 +63,6 @@
     </div>
     <div class="col-md-4"></div>
     </div>
-    
+    <script src="{% static 'js/register.js' %}"></script>
 
 {% endblock %}
