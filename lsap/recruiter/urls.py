@@ -12,7 +12,9 @@ urlpatterns = [
     path('applicants/<int:id>',views.applicant,name='applicants'),
      path('selected/<int:id>',views.selected,name='selected'),
    path('select/<int:job_id>/<int:applicant_id>',views.slelectapplicant,name='select'),
-      path('remove/<int:job_id>/<int:applicant_id>',views.removeapplicant,name='remove')
+      path('remove/<int:job_id>/<int:applicant_id>',views.removeapplicant,name='remove'),
+      path('editjob/<int:id>',views.edit_job,name='editjob'),
+      path('applicantdetails/<int:applicant_id>',views.applicantprofile,name='applicantprofile')
 
 
    
