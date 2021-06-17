@@ -121,7 +121,7 @@ class recruiter_register(View):
                 usertype=Recruiter.objects.create(user=user)
                 usertype.save()
                 user.set_password(password)
-                user.is_active =True
+                user.is_active =False
                 user.save()
                 current_site = get_current_site(request)
                 email_body = {
