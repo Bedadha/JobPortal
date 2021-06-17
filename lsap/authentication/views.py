@@ -64,10 +64,10 @@ class applicant_register(View):
                 if len(password)<6:
                     messages.error(request, 'password too short')
                     return render(request, 'authentication/applicant_register.html', context)
-                user = User.objects.create_user(username=username, email = email)
+                user = User.objects.create_user(username=username, email=email)
+                user.set_password(password)
                 usertype=Applicant.objects.create(user=user)
                 usertype.save()
-                user.set_password(password)
                 user.is_active = False
                 user.save()
                 current_site = get_current_site(request)
@@ -92,7 +92,7 @@ class applicant_register(View):
                     [email],
                 )
                 EmailThread(email).start()
-                messages.success(request, 'Please check your email')
+                messages.success(request, 'Hi there, please go through verification mail to activate your account')
                 return render(request, 'authentication/login.html')
             messages.error(request, 'email already exists')
         messages.error(request,'user already exists')
@@ -117,11 +117,11 @@ class recruiter_register(View):
                 if len(password)<6:
                     messages.error(request, 'password too short')
                     return render(request, 'authentication/recruiter_register.html', context)
-                user = User.objects.create_user(username=username, email = email)
+                user = User.objects.create_user(username=username, email=email)
                 usertype=Recruiter.objects.create(user=user)
                 usertype.save()
                 user.set_password(password)
-                user.is_active = False
+                user.is_active =True
                 user.save()
                 current_site = get_current_site(request)
                 email_body = {
@@ -137,7 +137,7 @@ class recruiter_register(View):
                 email_subject = 'Activate your account'
 
                 activate_url = 'http://'+current_site.domain+link
-
+                print(activate_url)
                 email = EmailMessage(
                     email_subject,
                     'Hi '+user.username + ', Please the link below to activate your account \n'+activate_url,
@@ -145,7 +145,7 @@ class recruiter_register(View):
                     [email],
                 )
                 EmailThread(email).start()
-                messages.success(request, 'Please check your email')
+                messages.success(request, 'Hi there, please go through verification mail to activate your account')
                 return render(request, 'authentication/login.html')
             messages.error(request, 'email already exists')
         messages.error(request,'user already exists')
@@ -231,7 +231,6 @@ class RequestPasswordResetEmail(View):
             email_subject = 'Password reset Instructions'
 
             reset_url = 'http://'+current_site.domain+link
-
             email = EmailMessage(
                 email_subject,
                 'Hi there, Please click on the link below to reset your password \n'+reset_url,
