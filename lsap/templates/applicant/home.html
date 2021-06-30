@@ -28,7 +28,7 @@
 <div class="bg-image" style="height: fit-content;">
 
 <div class="bg-text">
-  <h1>Welcome {{user}}!!</h1>
+  <h1 style="text-transform: capitalize; ">Welcome {{user}}!!</h1>
   <h2>Apply for your Dream Job</h2>
 </div>
 </div>
@@ -68,8 +68,8 @@
       <tbody>
         {% for job in page_obj %}
         <tr>
-            <td>{{job.company_name}}</td>
-            <td>{{job.job_type}}</td>
+            <td style="text-transform: capitalize; ">{{job.company_name}}</td>
+            <td style="text-transform: uppercase; ">{{job.job_type}}</td>
           <td><a href="{% url 'jobdetail' job.id  %}" class = "btn btn-secondary btn-sm">View</a></td>
           
         </tr>

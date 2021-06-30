@@ -19,26 +19,33 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+    <div class="bg-image" style="height: fit-content;">
+      <div class="bg-text">
+        <h2>Jobs Applied</h2>
+      </div>
+    </div>
     
     <script src="" async defer></script>
   </body>
 </html>
 
-<div class="app-table">
-  <table class = "table table-stripped table-hover">
+<div class="app-table" style="padding: 50px; ">
+  <table class = "table table-stripped table-hover" style="border: 2px solid #282A35; border-radius: 5px; ">
     <thead>
       <tr>
         <th>Company</th>
         <th>Profile</th> 
-        <th>Status</th> 
+        <th>Status</th>
+        <th></th> 
 
     </thead>
 
     <tbody>
       {% for job,stat in zipd %}
       <tr>
-          <td>{{job.job.company_name}}</td>
-          <td>{{job.job.job_type}}</td>
+          <td style="text-transform: capitalize; ">{{job.job.company_name}}</td>
+          <td style="text-transform: uppercase; ">{{job.job.job_type}}</td>
         {% if stat == "selected" %}
         <td><a href="{% url 'jobdetail' job.job.id  %}" class = "btn btn-secondary btn-sm">Selected</a></td>
         {% elif stat == "pending" %}
